@@ -1,0 +1,60 @@
+╔══════════════════════════════════════════════════════════╗
+║                eBay Listings Dashboard Setup            ║
+╚══════════════════════════════════════════════════════════╝
+
+
+──────────────────────────────────────────────────────────
+
+★ STEP 1: LAUNCH THE DASHBOARD ★
+
+──────────────────────────────────────────────────────────
+
+1. Download or build the `ebaylistings.exe` file on your computer.
+
+2. Start the tool:
+   - Double-click the `ebaylistings.exe` file, OR
+   - Open a terminal/command prompt and run:
+     > ./ebaylistings.exe
+
+3. The tool launches a local web server automatically!
+
+   ┌─────────────────────────────┐
+   │  http://localhost:8080/     │
+   └─────────────────────────────┘
+
+4. Open your favorite web browser and enter the address above.
+
+   You’ll see the eBay Listings Dashboard—ready for searching and filtering!
+
+──────────────────────────────────────────────────────────
+
+✨ Tip: If you want to use a custom port, check the documentation for command-line options!
+
+══════════════════════════════════════════════════════════
+
+
+/* 
+                -step1:-
+How does the user launch the tool?
+Is it a command-line tool, a web dashboard, or both?
+If command-line: What is the executable name and typical command structure?
+If web: What is the URL or how do they access the UI?
+
+                -step2:-
+How does the user specify a seller?
+Is there a prompt or flag for entering the seller username (e.g., --seller=USERNAME)?
+Can users filter by seller from within the UI?
+
+                -step3:-
+How does the search work?
+Can users search by keywords, item number, or other filters in addition to seller?
+Are there example commands or search queries?
+
+                -step4:-
+What is the output?
+Does it display results in the terminal, export to a file, or show in a web table?
+What details are shown for each result (title, price, URL, etc.)?
+
+                -step5:-
+Any prerequisites or setup steps?
+Do users need to configure anything before searching (e.g., initial database sync)? */

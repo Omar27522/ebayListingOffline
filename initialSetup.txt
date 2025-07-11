@@ -1,0 +1,89 @@
+★ STEP 0: INITIAL LAUNCH ★
+
+──────────────────────────────────────────────────────────
+
+When you first launch the software, you'll see a setup window like this:
+
+┌───────────────────────────────────────────────┐
+│  Welcome to eBay Listings Reference Tool!     │
+│                                               │
+│  Please enter your eBay Store URL or          │
+│  Seller Username to begin:                    │
+│                                               │
+│  [_____________________________]              │
+│                                               │
+│  (Click 'Save & Continue' to proceed)         │
+└───────────────────────────────────────────────┘
+
+This window means the software is up and running. Enter the required info and click 'Save & Continue' to complete setup!
+
+──────────────────────────────────────────────────────────
+
+If the username or store URL is valid, you'll see live counters like this:
+
+┌───────────────────────────────────────────────┐
+│  eBay Listings Reference Tool                 │
+│                                               │
+│  Seller: [your-seller-username]               │
+│                                               │
+│  Online Listings Found:   [  123 ]            │
+│  Listings Saved Locally:  [  120 ]            │
+│                                               │
+│  (Dashboard is now ready to use!)             │
+└───────────────────────────────────────────────┘
+
+You can now proceed to search, filter, and manage your listings from the dashboard!
+
+This second window  will have a settings button. the user will be able to use a custom URL for the listings. by default it will be the username or the store name.
+
+
+──────────────────────────────────────────────────────────
+
+## Key Considerations for Initial Setup Flow
+
+1. User Experience (UX)
+   - Clear steps, visual feedback, intuitive design
+   - ASCII window frames signal software status
+   - Settings button is visible and accessible
+
+2. Configurability
+   - Defaults to username/store, but custom URL possible
+   - Settings changes are easy and immediate
+
+3. Validation and Error Handling
+   - Input is validated for correct format and existence
+   - Clear error messages for invalid input
+
+4. Data Synchronization
+   - Live counters for online/saved listings update after sync
+   - Sync status indicator (e.g., "Syncing...", "Up to date")
+
+5. Persistence
+   - Save user input/settings for future launches
+   - Store in config file or local DB
+
+6. Accessibility and Usability
+   - Keyboard navigation supported
+   - Friendly, brief instructions
+
+7. Security
+   - Only public data used
+   - Input sanitized to prevent issues
+
+8. Extensibility
+   - Settings button ready for future options (filters, more marketplaces, etc.)
+
+---
+
+| Aspect            | What to Ensure                                               |
+|-------------------|-------------------------------------------------------------|
+| UX                | Clear steps, visual feedback, intuitive design              |
+| Configurability   | Easy to use defaults, flexible custom options               |
+| Validation        | Robust input checks, helpful error messages                 |
+| Data Sync         | Accurate, timely counters; sync status indicator            |
+| Persistence       | Save user settings for future launches                      |
+| Usability         | Keyboard support, clear instructions                        |
+| Security          | Sanitize inputs, store only what’s needed                   |
+| Extensibility     | Plan for more settings/features in the future               |
+
+Use this checklist as a reference when developing and testing the initial setup experience!

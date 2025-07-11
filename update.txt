@@ -1,0 +1,5 @@
+the first step is to creat a mockup of the windows app.
+
+then we will create the dashboard.
+
+:)
