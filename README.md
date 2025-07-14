@@ -23,6 +23,7 @@ For each eBay listing, the tool collects and saves the following fields:
 | Category        | Helps group similar items together                           |
 | Listing Date    | Useful for tracking new vs older listings                    |
 | Shipping Info   | Dimensions, weight, or handling time (if available)          |
+| # of watchers   | Number of watchers for the listing                           |
 
 ## Getting Started
 
