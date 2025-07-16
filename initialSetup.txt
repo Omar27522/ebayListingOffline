@@ -47,7 +47,7 @@ This second window  will have a settings button. the user will be able to use a 
    - Settings button is visible and accessible
 
 2. Configurability
-   - Defaults to username/store, but custom URL possible
+   - Defaults to "eBay-OFFLINE (username/store)", but custom URL possible
    - Settings changes are easy and immediate
 
 3. Validation and Error Handling

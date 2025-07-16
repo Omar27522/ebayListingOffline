@@ -8,19 +8,21 @@ Automates the retrieval and lookup of item details from public eBay listings for
 - **Database Module:** Stores scraped data locally (e.g., SQLite, JSON, or CSV)
 
 ### Listing Data Schema
-Each listing record in the local database includes the following fields:
-- **Item Number:** Unique identifier for each listing (used for indexing and tracking)
-- **Title:** The listing title (used for matching with internal titles)
-- **Description:** Full item description (crucial for shipping details)
-- **Price:** Listed price (useful for reference or audits)
-- **Listing URL:** Direct link to the eBay item
+Each listing record in the local database includes the following fields (as collected from public eBay listings):
 - **Seller Username:** Confirms the listing is from your company
-- **Category:** Category of the item (for grouping/sorting)
-- **Listing Date:** Date the item was listed (helps track new/old listings)
-- **Shipping Info:** Any available shipping details (dimensions, weight, handling time)
+- **Item Number:** eBay's unique ID for each listing
+- **Title:** Title of the listing
+- **Description:** Crucial for shipping
+- **Stock QTY:** Stock quantity for the listing
+- **Item Specifics:** Item specifics for the listing
+- **Price:** Price of the listing
+- **Listing URL:** Direct link to the item
+- **Listing Date:** Useful for tracking new vs older listings
+- **Shipping Info:** Dimensions, weight, or handling time
+- **# of watchers:** Number of watchers for the listing
 
 - **Matcher/Search Module:** Matches internal item titles to eBay data and provides fast lookup
-- **(Optional) Dashboard/UI:** Simple web or CLI interface for searching listings
+- **(Optional) Dashboard/UI:** Simple web or CLI interface for searching listings (dashboard/UI is optional and may be enabled or disabled)
 
 ## Data Flow
 1. Scraper fetches latest listings from company’s public eBay page
@@ -36,12 +38,14 @@ Each listing record in the local database includes the following fields:
 - (Optional) Web framework (e.g., Gin, for dashboard)
 
 ## Update Mechanism
-- Scheduled job (cron or internal timer) or manual trigger
-- Overwrites/updates local database with new listings
+- The tool automatically updates its local database at scheduled intervals (via scheduled job or internal timer), or you can trigger a manual refresh.
+- Overwrites/updates the local database with new listings.
+- No eBay account access is required for updates.
 
 ## Security Considerations
 - Only accesses public data—no credentials or sensitive info required
 - No write access to eBay
+- No eBay account access required
 
 ## Extensibility
 - Can add support for other marketplaces (Amazon, Shopify, etc.)
@@ -58,3 +62,29 @@ Each listing record in the local database includes the following fields:
 
 ## Contact
 For technical questions, contact the project maintainer or IT lead.
+
+---
+
+## Setting Up Go Modules and Installing Dependencies (for GUI)
+
+To build and run the GUI (using the `walk` library) on Windows, follow these steps in your project directory (where `app.go` is located):
+
+1. **Initialize Go Modules**  
+   This creates a `go.mod` file for dependency management:
+   ```sh
+   go mod init ebayListings
+   ```
+
+2. **Install required dependencies**  
+   Download the GUI libraries:
+   ```sh
+   go get github.com/lxn/walk
+   go get github.com/lxn/win
+   ```
+
+3. **Run the application**
+   ```sh
+   go run app.go
+   ```
+
+You do **not** need to manually download or move the `walk` library; Go Modules will handle everything automatically.
