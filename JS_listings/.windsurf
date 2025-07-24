@@ -1,0 +1,188 @@
+# eBay Listings Reference Tool
+
+## Project Overview
+A lightweight vanilla JavaScript web application designed for shipping staff at ATG PC Store to quickly lookup eBay item IDs and titles without constant internet connection. The tool fetches eBay listings once, stores them locally, and provides fast offline search capabilities.
+
+## Business Context
+**Problem**: Shipping staff frequently need to look up eBay item information, which requires interrupting office staff or slow internet searches.
+
+**Solution**: One-time data fetch + local storage = fast offline lookups for shipping operations.
+
+**Target Users**: Shipping staff who need quick access to item numbers and titles for packaging and shipping operations.
+
+## Technical Architecture
+
+### Tech Stack
+- **Frontend**: Vanilla JavaScript (ES6+), HTML5, CSS3
+- **Storage**: localStorage (browser-based)
+- **Data Source**: eBay Store via CORS proxy
+- **Deployment**: Local file system (file:// protocol)
+
+### Key Design Decisions
+1. **Offline-First**: Works without internet after initial sync
+2. **Manual Updates**: User-controlled data fetching (daily/as needed)
+3. **Exact Match Search**: Simple, fast title-only search
+4. **No Dependencies**: Pure vanilla JS for maximum compatibility
+5. **CORS Proxy**: Handles eBay's cross-origin restrictions
+
+## Project Structure
+```
+JS_listings/
+├── index.html          # Main application interface
+├── css/
+│   └── style.css       # Modern responsive styling
+├── js/
+│   ├── main.js         # Application controller & UI management
+│   ├── storage.js      # localStorage operations
+│   └── fetcher.js      # eBay data fetching via CORS proxy
+├── README.md           # User documentation
+├── ROADMAP.md          # Development plan & requirements
+├── AI_thoughts.md      # Technical analysis & recommendations
+└── .windsurf           # This project file
+```
+
+## Core Features
+
+### ✅ Implemented (Step 1 Complete)
+- **Modern UI**: Clean, responsive interface with sync button and search
+- **Module Architecture**: Organized JavaScript with separation of concerns
+- **Storage Framework**: localStorage integration ready
+- **CORS Proxy Setup**: Ready for eBay data fetching
+- **Error Handling**: Framework for user-friendly messages
+- **Offline Support**: Designed to work with file:// protocol
+
+### 🚧 In Development (Steps 2-7)
+- **Data Fetching**: CORS proxy integration for eBay listings
+- **Local Storage**: Persistent data storage and retrieval
+- **Search Implementation**: Exact match title search
+- **Results Display**: Table-based results with responsive design
+- **Error Handling**: Comprehensive error messages and UX
+- **Testing & Polish**: Cross-browser compatibility and optimization
+
+## Development Roadmap
+
+### 7-Step Development Plan
+1. ✅ **Project Foundation** (1-2 hours) - Complete
+2. 🔄 **Data Fetching via CORS Proxy** (2-3 hours) - Next
+3. ⏳ **Local Data Storage** (1-2 hours)
+4. ⏳ **Search Implementation** (2-3 hours)
+5. ⏳ **Results Display** (1-2 hours)
+6. ⏳ **Error Handling & UX** (1-2 hours)
+7. ⏳ **Testing & Polish** (1-2 hours)
+
+**Total Estimated Time**: 9-16 hours
+**Timeline**: 4-7 days at 1-2 steps per day
+
+## Target eBay Store
+**ATG PC Store**: https://www.ebay.com/sch/i.html?_dkr=1&iconV2Request=true&_blrs=recall_filtering&_ssn=atg_pc&store_cat=0&store_name=atgpc&_oac=1
+
+## Data Model
+```javascript
+// Listing Object Structure
+{
+  itemNumber: "123456789012",  // eBay unique item ID
+  title: "Gaming Laptop..."    // Listing title for search
+}
+
+// Storage Structure
+{
+  listings: Array<Listing>,    // Array of listing objects
+  timestamp: "2025-07-24...",  // Last sync timestamp
+  count: 150                   // Total number of items
+}
+```
+
+## Key Requirements
+
+### Functional Requirements
+- ✅ Manual sync button for eBay data fetching
+- ✅ Exact match search in titles only
+- ✅ Text-only display (no images)
+- ✅ Offline operation after initial sync
+- ✅ Error messages on fetch failure (no auto-retry)
+
+### Technical Requirements
+- ✅ Local web app (works with file:// protocol)
+- ✅ Modern browser compatibility (Chrome, Firefox, Edge)
+- ✅ localStorage for data persistence
+- ✅ Responsive design for mobile/desktop
+- ✅ No external dependencies or frameworks
+
+### UX Requirements
+- ✅ Modern, clean interface
+- ✅ Loading states and user feedback
+- ✅ Manual sync control (no automatic updates)
+- ✅ Fast search results (<500ms target)
+
+## Technical Challenges & Solutions
+
+### 1. CORS Policy Challenge
+**Problem**: eBay blocks direct browser requests
+**Solution**: CORS proxy service (cors-anywhere.herokuapp.com)
+**Fallback**: Manual CSV import option
+
+### 2. Data Parsing Challenge
+**Problem**: eBay's dynamic HTML structure
+**Solution**: Multiple selector strategies with fallback parsing
+
+### 3. Storage Limitations
+**Problem**: localStorage size limits
+**Solution**: Minimal data model (item number + title only)
+
+## Development Guidelines
+
+### Code Style
+- ES6+ JavaScript features
+- Modular architecture with clear separation
+- Comprehensive error handling
+- User-friendly error messages
+- Performance-optimized search
+
+### Browser Support
+- Chrome 70+
+- Firefox 65+
+- Edge 79+
+- Safari 12+
+
+### Testing Strategy
+- Manual testing across target browsers
+- Local file:// protocol testing
+- Offline functionality verification
+- Error scenario testing
+
+## Future Enhancements (Post v1.0)
+- Inactive listings management
+- Data export/backup functionality
+- Advanced search filters
+- Bulk operations
+- Performance analytics
+- Auto-sync scheduling options
+
+## Getting Started
+
+### For Developers
+1. Open project in Windsurf
+2. Review ROADMAP.md for current development status
+3. Test current implementation by opening index.html
+4. Continue with Step 2 (Data Fetching) when ready
+
+### For End Users
+1. Download project files
+2. Open index.html in modern browser
+3. Click "Sync eBay Listings" for initial data load
+4. Use search box for fast offline lookups
+
+## Support & Maintenance
+- **Primary Developer**: Omar27522
+- **Development Environment**: Windsurf IDE
+- **Version Control**: Git (recommended)
+- **Deployment**: Local file system (no server required)
+
+## Project Status
+**Current Phase**: Step 1 Complete - Foundation Built
+**Next Milestone**: Step 2 - Implement CORS Proxy Data Fetching
+**Target Release**: v1.0 with core functionality (4-7 days)
+
+---
+
+*This project represents a practical solution to a real business need, balancing technical simplicity with user requirements for fast, reliable offline access to eBay listing data.*

@@ -3,12 +3,37 @@
 ## 🎯 Project Overview
 Build a vanilla JavaScript web application for one-time eBay data collection with local storage and fast offline search. Shipping staff can quickly lookup eBay item IDs without constant internet connection or interrupting office staff.
 
-**Key Approach:** Fetch once, store locally, search offline, update manually
+**Key Approach:** Fetch once, store locally, search offline, update manually  
 **Target Store:** [ATG PC Store](https://www.ebay.com/sch/i.html?_dkr=1&iconV2Request=true&_blrs=recall_filtering&_ssn=atg_pc&store_cat=0&store_name=atgpc&_oac=1)
 
-## 📋 Phase 1: Foundation & Setup (Days 1-3)
+## ✅ **Confirmed Requirements**
 
-### 1.1 Project Structure
+### Data Fetching
+- ✅ CORS Proxy Service with manual sync button
+- ✅ No timeout restrictions (can take time)
+- ✅ Show error message on failure, no auto-retry
+
+### Search Functionality
+- ✅ Search titles only
+- ✅ Exact match only
+- ✅ Text-only display (no images)
+
+### Technical Specs
+- ✅ Local web app (works with `file://`)
+- ✅ Offline operation after initial fetch
+- ✅ Modern browser compatibility
+- ✅ localStorage for data persistence
+
+### UI Design
+- ✅ Modern, clean interface
+- ✅ Text-only results
+- ✅ Manual sync button for user control
+
+---
+
+## 🚀 **7-Step Development Plan**
+
+### **Step 1: Project Foundation** ⏱️ *~1-2 hours*
 - [ ] Create basic file structure
   ```
   JS_listings/
@@ -17,36 +42,75 @@ Build a vanilla JavaScript web application for one-time eBay data collection wit
   │   └── style.css
   ├── js/
   │   ├── main.js
-  │   ├── ebay-fetcher.js
-  │   └── storage.js
-  └── data/
-      └── cache.json
+  │   ├── storage.js
+  │   └── fetcher.js
+  └── README.md
   ```
+- [ ] Basic HTML skeleton with sync button and search interface
+- [ ] Initial CSS for modern, clean styling
+- [ ] JavaScript module structure setup
 
-### 1.2 Basic HTML Layout
-- [ ] Create simple, clean interface for shipping staff
-- [ ] Add "Fetch Listings" button for initial data load
-- [ ] Add "Update Listings" button for manual refresh
-- [ ] Include search input for fast local lookup
-- [ ] Design listings display table with item ID and title
-- [ ] Add status indicators (last updated, total items)
+### **Step 2: Data Fetching via CORS Proxy** ⏱️ *~2-3 hours*
+- [ ] Implement CORS proxy integration
+- [ ] Create manual sync button functionality
+- [ ] Parse eBay listing data (Item Number + Title)
+- [ ] Handle network errors with user-friendly messages
+- [ ] Add loading states during fetch
 
-### 1.3 CSS Styling
-- [ ] Mobile-first responsive design
-- [ ] Clean, professional interface
-- [ ] Loading states and animations
-- [ ] Print-friendly styles
+### **Step 3: Local Data Storage** ⏱️ *~1-2 hours*
+- [ ] Implement localStorage data persistence
+- [ ] Data validation and sanitization
+- [ ] Store timestamp of last sync
+- [ ] Handle storage quota limits gracefully
 
-## 🔧 Phase 2: One-Time Data Collection (Days 4-7)
+### **Step 4: Search Implementation** ⏱️ *~2-3 hours*
+- [ ] Exact match search for titles only
+- [ ] Real-time search as user types
+- [ ] Search result highlighting
+- [ ] "No results found" handling
 
-### 2.1 eBay Data Fetching Strategy
-**⚠️ Critical Challenge: CORS Policy**
+### **Step 5: Results Display** ⏱️ *~1-2 hours*
+- [ ] Simple, modern table layout
+- [ ] Text-only results (Item Number + Title)
+- [ ] Responsive design for mobile/desktop
+- [ ] Status indicators (total items, last updated)
 
-eBay blocks direct browser requests. Solutions prioritized for one-time fetch:
-1. **CORS Proxy Service** (Recommended for simplicity)
-   - Use public CORS proxy for initial fetch
-   - Only needed during manual updates
-   - No server maintenance required
+### **Step 6: Error Handling & UX** ⏱️ *~1-2 hours*
+- [ ] Comprehensive error messages
+- [ ] Loading states and user feedback
+- [ ] Offline detection and messaging
+- [ ] Data validation and edge cases
+
+### **Step 7: Testing & Polish** ⏱️ *~1-2 hours*
+- [ ] Cross-browser testing (Chrome, Firefox, Edge)
+- [ ] Local file:// protocol testing
+- [ ] Offline functionality verification
+- [ ] Performance optimization
+- [ ] Final UI polish and accessibility
+
+---
+
+## 📊 **Primary Release Scope**
+
+**Total Estimated Time:** 9-16 hours  
+**Recommended Pace:** 1-2 steps per day  
+**Primary Release Timeline:** 4-7 days
+
+### Core Features for v1.0:
+1. ✅ Manual eBay data sync
+2. ✅ Local storage persistence
+3. ✅ Exact match title search
+4. ✅ Offline operation
+5. ✅ Modern, responsive UI
+6. ✅ Error handling
+7. ✅ Cross-browser compatibility
+
+### Future Features (Post v1.0):
+- Inactive listings management
+- Data export/backup
+- Advanced search filters
+- Bulk operations
+- Performance analytics
 
 2. **Browser Extension** (Alternative)
    - Can bypass CORS restrictions

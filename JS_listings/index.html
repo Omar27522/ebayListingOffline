@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBay Listings Reference Tool</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>eBay Listings Reference Tool</h1>
+            <p class="subtitle">ATG PC Store - Shipping Reference</p>
+        </header>
+
+        <main class="main">
+            <!-- Sync Section -->
+            <section class="sync-section">
+                <div class="sync-controls">
+                    <button id="syncBtn" class="btn btn-primary">
+                        <span class="btn-text">Sync eBay Listings</span>
+                        <span class="btn-loading" style="display: none;">Syncing...</span>
+                    </button>
+                    <div class="sync-status">
+                        <span id="lastUpdated">Never synced</span>
+                        <span id="itemCount">0 items</span>
+                    </div>
+                </div>
+                <div id="syncMessage" class="message" style="display: none;"></div>
+            </section>
+
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-controls">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search by title (exact match)..."
+                        class="search-input"
+                        disabled
+                    >
+                    <button id="clearBtn" class="btn btn-secondary" disabled>Clear</button>
+                </div>
+                <div class="search-info">
+                    <span id="searchResults">Search disabled - sync data first</span>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section">
+                <div class="results-container">
+                    <table id="resultsTable" class="results-table">
+                        <thead>
+                            <tr>
+                                <th>eBay Item Number</th>
+                                <th>Title</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody">
+                            <tr class="no-data">
+                                <td colspan="2">No data available - click "Sync eBay Listings" to get started</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Offline tool for shipping staff - Last sync: <span id="footerLastSync">Never</span></p>
+        </footer>
+    </div>
+
+    <!-- JavaScript Modules -->
+    <script src="js/storage.js"></script>
+    <script src="js/fetcher.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
