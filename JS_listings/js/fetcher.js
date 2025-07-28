@@ -6,7 +6,11 @@
 const Fetcher = {
     // Configuration
     CONFIG: {
-        CORS_PROXY: 'https://cors-anywhere.herokuapp.com/',
+        CORS_PROXIES: [
+            'https://api.allorigins.win/raw?url=',
+            'https://corsproxy.io/?',
+            'https://cors-anywhere.herokuapp.com/'
+        ],
         EBAY_STORE_URL: 'https://www.ebay.com/sch/i.html?_dkr=1&iconV2Request=true&_blrs=recall_filtering&_ssn=atg_pc&store_cat=0&store_name=atgpc&_oac=1',
         TIMEOUT: 30000, // 30 seconds
         MAX_RETRIES: 3
@@ -17,20 +21,53 @@ const Fetcher = {
      * @returns {Promise<Array>} Promise resolving to array of listings
      */
     async fetchListings() {
+        console.log('Starting eBay listings fetch...');
+        
+        let lastError = null;
+        
+        // Try each CORS proxy in sequence
+        for (let i = 0; i < this.CONFIG.CORS_PROXIES.length; i++) {
+            const proxy = this.CONFIG.CORS_PROXIES[i];
+            console.log(`Attempting fetch with proxy ${i + 1}/${this.CONFIG.CORS_PROXIES.length}: ${proxy}`);
+            
+            try {
+                const listings = await this.fetchWithProxy(proxy);
+                if (listings && listings.length > 0) {
+                    console.log(`Successfully fetched ${listings.length} listings using proxy: ${proxy}`);
+                    return listings;
+                }
+            } catch (error) {
+                console.warn(`Proxy ${proxy} failed:`, error.message);
+                lastError = error;
+                
+                // Continue to next proxy
+                continue;
+            }
+        }
+        
+        // If all proxies failed
+        throw new Error(`All CORS proxies failed. Last error: ${lastError?.message || 'Unknown error'}`);
+    },
+
+    /**
+     * Fetch data using a specific CORS proxy
+     * @param {string} proxyUrl - CORS proxy URL
+     * @returns {Promise<Array>} Promise resolving to array of listings
+     */
+    async fetchWithProxy(proxyUrl) {
+        // Construct the full URL with CORS proxy
+        const fullUrl = proxyUrl + encodeURIComponent(this.CONFIG.EBAY_STORE_URL);
+        
+        // Fetch with timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), this.CONFIG.TIMEOUT);
+        
         try {
-            console.log('Starting eBay listings fetch...');
-            
-            // Construct the full URL with CORS proxy
-            const proxyUrl = this.CONFIG.CORS_PROXY + this.CONFIG.EBAY_STORE_URL;
-            
-            // Fetch with timeout
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), this.CONFIG.TIMEOUT);
-            
-            const response = await fetch(proxyUrl, {
+            const response = await fetch(fullUrl, {
                 method: 'GET',
                 headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                 },
                 signal: controller.signal
             });
@@ -42,26 +79,30 @@ const Fetcher = {
             }
             
             const html = await response.text();
+            
+            if (!html || html.length < 1000) {
+                throw new Error('Received empty or incomplete response');
+            }
+            
             console.log('Received HTML response, parsing listings...');
             
             // Parse the HTML to extract listings
             const listings = this.parseListings(html);
             
-            console.log(`Successfully parsed ${listings.length} listings`);
+            if (!listings || listings.length === 0) {
+                throw new Error('No listings found in response');
+            }
+            
             return listings;
             
         } catch (error) {
-            console.error('Error fetching eBay listings:', error);
+            clearTimeout(timeoutId);
             
             if (error.name === 'AbortError') {
-                throw new Error('Request timed out. Please try again.');
-            } else if (error.message.includes('CORS')) {
-                throw new Error('CORS proxy error. The proxy service may be unavailable.');
-            } else if (error.message.includes('Failed to fetch')) {
-                throw new Error('Network error. Please check your internet connection.');
-            } else {
-                throw new Error(`Fetch failed: ${error.message}`);
+                throw new Error('Request timed out');
             }
+            
+            throw error;
         }
     },
 

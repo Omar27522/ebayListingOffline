@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBay Fetcher Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background-color: #0056b3; }
+        button:disabled { background-color: #6c757d; cursor: not-allowed; }
+        #output {
+            white-space: pre-wrap;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>eBay Listings Fetcher Test</h1>
+    
+    <div class="test-section info">
+        <h3>Test Configuration</h3>
+        <p><strong>Target Store:</strong> ATG PC Store</p>
+        <p><strong>CORS Proxies:</strong> Multiple fallback options configured</p>
+        <p><strong>Timeout:</strong> 30 seconds</p>
+    </div>
+
+    <div class="test-section">
+        <h3>Test Controls</h3>
+        <button id="testFetch" onclick="testFetch()">Test Fetch Listings</button>
+        <button id="testParsing" onclick="testParsing()">Test HTML Parsing</button>
+        <button id="clearOutput" onclick="clearOutput()">Clear Output</button>
+    </div>
+
+    <div class="test-section">
+        <h3>Test Output</h3>
+        <div id="output">Click "Test Fetch Listings" to begin testing...</div>
+    </div>
+
+    <script src="js/fetcher.js"></script>
+    <script>
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+            output.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            document.getElementById('output').textContent = '';
+        }
+
+        async function testFetch() {
+            const button = document.getElementById('testFetch');
+            button.disabled = true;
+            button.textContent = 'Testing...';
+            
+            try {
+                log('Starting eBay listings fetch test...', 'info');
+                log('This may take up to 30 seconds per proxy...', 'info');
+                
+                const listings = await Fetcher.fetchListings();
+                
+                if (listings && listings.length > 0) {
+                    log(`✅ SUCCESS: Fetched ${listings.length} listings!`, 'success');
+                    log(`Sample listing: ${JSON.stringify(listings[0], null, 2)}`, 'info');
+                    
+                    // Show first few listings
+                    const sampleSize = Math.min(5, listings.length);
+                    log(`\nFirst ${sampleSize} listings:`, 'info');
+                    for (let i = 0; i < sampleSize; i++) {
+                        log(`${i + 1}. ${listings[i].itemNumber} - ${listings[i].title}`, 'info');
+                    }
+                } else {
+                    log('❌ No listings returned', 'error');
+                }
+                
+            } catch (error) {
+                log(`❌ FETCH FAILED: ${error.message}`, 'error');
+                console.error('Detailed error:', error);
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Test Fetch Listings';
+            }
+        }
+
+        function testParsing() {
+            log('Testing HTML parsing functions...', 'info');
+            
+            // Test sample HTML structure
+            const sampleHtml = `
+                <div class="s-item">
+                    <a href="https://www.ebay.com/itm/123456789" data-itemid="123456789" class="s-item__link">
+                        <h3 class="s-item__title">Test Gaming Laptop - Intel i7</h3>
+                    </a>
+                </div>
+            `;
+            
+            try {
+                const listings = Fetcher.parseListings(sampleHtml);
+                if (listings.length > 0) {
+                    log(`✅ Parsing test successful: ${JSON.stringify(listings[0])}`, 'success');
+                } else {
+                    log('❌ Parsing test failed: No listings extracted', 'error');
+                }
+            } catch (error) {
+                log(`❌ Parsing test error: ${error.message}`, 'error');
+            }
+        }
+
+        // Override console.log to also show in our output
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            log(args.join(' '), 'info');
+        };
+
+        const originalWarn = console.warn;
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            log(args.join(' '), 'error');
+        };
+
+        log('Test page loaded successfully. Fetcher module available.', 'success');
+    </script>
+</body>
+</html>
