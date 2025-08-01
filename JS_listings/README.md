@@ -21,7 +21,7 @@ For each eBay listing, the tool collects and saves the following fields locally:
 
 ## Getting Started
 store Link:
-https://www.ebay.com/sch/i.html?_dkr=1&iconV2Request=true&_blrs=recall_filtering&_ssn=atg_pc&store_cat=0&store_name=atgpc&_oac=1
+https://www.ebay.com/
 
 ### Prerequisites
 - Modern web browser
